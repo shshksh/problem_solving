@@ -1,10 +1,10 @@
-package algorithm_2018;
+package algorithm_2019;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Pa_2 {
+public class Pa_2_1 {
 	static int[] randData1000, randData10000, randData100000;
 	static int[] revData1000, revData10000, revData100000;
 	static double[][] calcTimes = new double[6][9];
@@ -96,8 +96,8 @@ public class Pa_2 {
 		time[5] += quickSort(Arrays.copyOf(data, data.length), 0, data.length-1, 2); // pivot: medium element
 		num = 0;
 		time[6] += quickSort(Arrays.copyOf(data, data.length), 0, data.length-1, 3); // pivot: random element
-//		time[7] += heapSort(Arrays.copyOf(data, data.length));
-//		time[8] += librarySort(Arrays.copyOf(data, data.length));
+		time[7] += heapSort(Arrays.copyOf(data, data.length));
+		time[8] += librarySort(Arrays.copyOf(data, data.length));
 	}
 
 	private static long bubbleSort(int[] data) {
@@ -178,10 +178,10 @@ public class Pa_2 {
 		int i = p, j = q+1, k = p;
 		while(i<=q && j<=r) {
 			if(data[i] <= data[j])
-			tmp[k++] = data[i++];
+				tmp[k++] = data[i++];
 			else
-		tmp[k++] = data[j++];
-	}
+				tmp[k++] = data[j++];
+		}
 		while(i<=q)
 			tmp[k++] = data[i++];
 		while(j<=r)
@@ -259,6 +259,51 @@ public class Pa_2 {
 		}
 
 		return -1;
+	}
+
+	private static double heapSort(int[] data) {
+		long start=System.currentTimeMillis();
+		buildMaxHeap(data);
+		int heapSize = data.length -1;
+		for (int i = heapSize; i >= 0; i--) {
+			swap(data, 0, i);
+			maxHeapify(data, 0, heapSize);
+			heapSize--;
+		}
+		long end=System.currentTimeMillis();
+		return end-start;
+	}
+
+	private static void maxHeapify(int[] data, int i, int heapSize) {
+		if(i*2+1 >= heapSize)
+			return;
+		int k = i*2+1;
+		if((i * 2 + 2 < heapSize) && data[k] < data[i * 2 + 2])
+			k = i * 2 + 2;
+		if(data[i] > data[k])
+			return;
+		swap(data,i,k);
+		maxHeapify(data,k,heapSize);
+	}
+
+	private static void swap(int[] data, int i, int j) {
+		int tmp = data[i];
+		data[i] = data[j];
+		data[j] = tmp;
+	}
+
+	private static void buildMaxHeap(int[] data) {
+		for(int i = (data.length-2)/2; i >= 0; i--) {
+			maxHeapify(data, i, data.length);
+		}
+	}
+
+	private static double librarySort(int[] data) {
+		long start = System.currentTimeMillis();
+		Arrays.sort(data);
+		long end = System.currentTimeMillis();
+
+		return end - start;
 	}
 
 	private static void printDataTable() {

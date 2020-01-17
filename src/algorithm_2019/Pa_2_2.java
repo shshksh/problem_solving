@@ -111,11 +111,11 @@ public class Pa_2_2 {
 
     private static void addLog(String[] log) {
         if(logSize >= logs.length)
-            reallocte();
+            reallocate();
         logs[logSize++] = new WebLog(log);
     }
 
-    private static void reallocte() {
+    private static void reallocate() {
         WebLog[] tmp = new WebLog[logs.length*2];
         System.arraycopy(logs, 0, tmp, 0, logs.length);
         logs = tmp;
