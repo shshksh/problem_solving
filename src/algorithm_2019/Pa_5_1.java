@@ -66,29 +66,31 @@ public class Pa_5_1 {
         }
 
         void delete(String target) {
-            WordNode z = find(target), y, x;
-            if (z.leftNode == null || z.rightNode==null)
-                y = z;
-            else
-                y = successor(z);
-            if (y.leftNode != null) {
-                x = y.leftNode;
+            WordNode targetNode = find(target);
+            WordNode deleteNode, subNode;
+            if (targetNode.leftNode == null || targetNode.rightNode == null)  { // 1개 이하
+                deleteNode = targetNode;
             } else {
-                x = y.rightNode;
+                deleteNode = successor(targetNode); // 변경 해야 할 노드
             }
-            if (x != null) {
-                x.superNode = y.superNode;
+            if(deleteNode.leftNode != null) {
+                subNode = deleteNode.leftNode;
+            } else {
+                subNode = deleteNode.rightNode;
             }
-            if (z.superNode == null) {
-                this.root = x;
-            } else if ( y == y.superNode.leftNode )
-                y.superNode.leftNode = x;
-            else
-                y.superNode.rightNode = x;
-            if(y!=z){
-                z.word = y.word;
-                z.mean = y.mean;
-                y = null;
+            if(subNode != null) {
+                subNode.superNode = deleteNode.superNode;
+            }
+            if(deleteNode.superNode == null) {
+                root = subNode;
+            } else if (deleteNode == deleteNode.superNode.leftNode) {
+                deleteNode.superNode.leftNode=subNode;
+            } else {
+                deleteNode.superNode.rightNode = subNode;
+            }
+            if(deleteNode != targetNode) {
+                targetNode.word = deleteNode.word;
+                targetNode.mean = deleteNode.mean;
             }
         }
 
@@ -111,16 +113,19 @@ public class Pa_5_1 {
         }
 
         void deleteAll(String fileName) throws NoSuchElementException, FileNotFoundException {
-            String path = "E:\\practice\\algorithm\\src\\algorithm_2019\\resource\\";
+            String path = System.getProperty("user.dir");
+            path += "\\algorithm\\src\\algorithm_2019\\resource\\";
             path += fileName;
             Scanner fileScanner = new Scanner(new File(path));
-
+            int cnt = 0;
             String word;
 
-            while(true) {
+            while(fileScanner.hasNext()) {
                 word = fileScanner.next();
                 delete(word);
+                cnt++;
             }
+            System.out.println(cnt + " words were deleted successfully.");
         }
     }
 
@@ -169,8 +174,9 @@ public class Pa_5_1 {
                 arg = sc.next();
                 try {
                     wordTree.deleteAll(arg);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                }catch (NoSuchElementException e1) {
+                } catch (FileNotFoundException e2) {
+                    e2.printStackTrace();
                 }
             } else if (command.equals("exit"))
                 break;
@@ -181,7 +187,9 @@ public class Pa_5_1 {
     }
 
     private static void initDictionary(WordTree wordTree) throws NoSuchElementException, FileNotFoundException {
-        Scanner fileScanner = new Scanner(new File("E:\\practice\\algorithm\\src\\algorithm_2019\\resource\\shuffled_dict.txt"));
+        String path = System.getProperty("user.dir");
+        path += "\\algorithm\\src\\algorithm_2019\\resource\\shuffled_dict.txt";
+        Scanner fileScanner = new Scanner(new File(path));
 
         String word, mean;
         while(true) {
