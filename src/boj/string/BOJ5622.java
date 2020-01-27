@@ -1,4 +1,4 @@
-package boj.array;
+package boj.string;
 
 import java.util.Scanner;
 
