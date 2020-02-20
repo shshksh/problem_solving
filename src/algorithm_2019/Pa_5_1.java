@@ -92,6 +92,7 @@ public class Pa_5_1 {
                 targetNode.word = deleteNode.word;
                 targetNode.mean = deleteNode.mean;
             }
+            size--;
         }
 
         private WordNode successor(WordNode curr) {
