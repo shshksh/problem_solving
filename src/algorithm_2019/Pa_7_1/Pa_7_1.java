@@ -14,11 +14,11 @@ public class Pa_7_1 {
             command = sc.next();
 
             switch (command) {
-                case "closeAreasOf":
-                    alabama.closeAreaOf(sc.next());
+                case "closeOf":
+                    alabama.closeOf(sc.nextLine().trim());
                     break;
                 case "traversalOf":
-                    alabama.traversalOf(sc.next());
+                    alabama.traversalOf(sc.nextLine().trim());
                     break;
                 case "exit":
                     break label;

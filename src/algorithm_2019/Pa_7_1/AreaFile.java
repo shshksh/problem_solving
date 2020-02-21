@@ -19,47 +19,34 @@ public class AreaFile {
         try {
             addToMap();
             connectEdges();
-        } catch (CloneNotSupportedException e) {
+        } catch (FileNotFoundException | CloneNotSupportedException e) {
             e.printStackTrace();
         }
         System.out.println("Successfully connect all edges.");
     }
 
-    private void addToMap() {
+    private void addToMap() throws FileNotFoundException {
         String path = "algorithm/src/algorithm_2019/resource/" + "alabama.txt";
         File file = new File(path);
 
-        Scanner fileScanner = null;
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Scanner fileScanner = new Scanner(file);
 
-        if (fileScanner != null) {
-            while (fileScanner.hasNextLine()) {
-                String[] line = fileScanner.nextLine().split("\t");
-                AreaMap.put(line[0], new Area(line[0], Double.parseDouble(line[1]), Double.parseDouble(line[2])));
-            }
+        while (fileScanner.hasNextLine()) {
+            String[] line = fileScanner.nextLine().split("\t");
+            AreaMap.put(line[0], new Area(line[0], Double.parseDouble(line[1]), Double.parseDouble(line[2])));
         }
     }
 
-    private void connectEdges() throws CloneNotSupportedException {
+    private void connectEdges() throws CloneNotSupportedException, FileNotFoundException {
         String path = "algorithm/src/algorithm_2019/resource/" + "roadList2.txt";
         File file = new File(path);
 
-        Scanner fileScanner = null;
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (fileScanner != null) {
-            while (fileScanner.hasNextLine()) {
-                String[] line = fileScanner.nextLine().split("\t");
-                connect(AreaMap.get(line[0]), (Area) AreaMap.get(line[1]).clone());
-                connect(AreaMap.get(line[1]), (Area) AreaMap.get(line[0]).clone());
-            }
+        Scanner fileScanner = new Scanner(file);
+
+        while (fileScanner.hasNextLine()) {
+            String[] line = fileScanner.nextLine().split("\t");
+            connect(AreaMap.get(line[0]), (Area) AreaMap.get(line[1]).clone());
+            connect(AreaMap.get(line[1]), (Area) AreaMap.get(line[0]).clone());
         }
     }
 
@@ -91,9 +78,9 @@ public class AreaFile {
         return rad * (double) 180 / Math.PI;
     }
 
-    public void closeAreaOf(String areaName) {
+    public void closeOf(String areaName) {
         if (!AreaMap.containsKey(areaName)) {
-            System.out.println("Wrong Area");
+            System.out.println("Type as \"$ [command] [area name]\"");
             return;
         }
 
@@ -105,7 +92,7 @@ public class AreaFile {
         int t = 0;
         while (!q.isEmpty() && t <= 10) {
             int size = q.size();
-            System.out.println("Hop "+t+":");
+            System.out.println("Hop " + t + ":");
             for (int i = 0; i < size; i++) {
                 Area target = q.poll();
                 System.out.println(target);
@@ -117,7 +104,7 @@ public class AreaFile {
 
     private void offerAllAdjacentLocationOf(Queue<Area> q, Area target, HashMap<String, Boolean> hashChk) {
         while (target != null) {
-            if(!hashChk.containsKey(target.name)) {
+            if (!hashChk.containsKey(target.name)) {
                 q.offer(AreaMap.get(target.name));
                 hashChk.put(target.name, true);
             }
@@ -127,7 +114,7 @@ public class AreaFile {
 
     public void traversalOf(String areaName) {
         if (!AreaMap.containsKey(areaName)) {
-            System.out.println("Wrong Area");
+            System.out.println("Type as \"$ [command] [area name]\"");
             return;
         }
         HashMap<String, Boolean> hashChk = new HashMap<>();
@@ -138,8 +125,8 @@ public class AreaFile {
     private void DFS(Area start, HashMap<String, Boolean> hashChk) {
         System.out.println(start);
         hashChk.put(start.name, true);
-        while(start != null) {
-            if(!hashChk.containsKey(start.name)) {
+        while (start != null) {
+            if (!hashChk.containsKey(start.name)) {
                 DFS(AreaMap.get(start.name), hashChk);
             }
             start = start.next;
