@@ -25,8 +25,8 @@ public class SW1211 {
 
         int min = 10000, index = -1;
         for (int i = 0; i < 100; i++) {
-            if (ladder[i][0] == 1) {
-                int result = run(ladder, i);
+            if (ladder[0][i] == 1) {
+                int result = run(ladder, 0, i);
                 if (result < min) {
                     min = result;
                     index = i;
@@ -37,15 +37,18 @@ public class SW1211 {
         System.out.println("#" + t + " " + index);
     }
 
-    private static int run(int[][] ladde, int start) {
+    private static int run(int[][] ladder, int x, int y) {
+        if(x == 99)
+            return 1;
+        ladder[x][y] = -1;
         int cnt = 0;
-        int x = 0, y = start;
-        while (x < 100) {
-            if (y == 0) {
-
-            }
-        }
-
+        if(y < 99 && ladder[x][y+1] == 1)
+            cnt = run(ladder, x, y+1) +1;
+        else if (y > 0 && ladder[x][y-1] == 1)
+            cnt = run(ladder, x, y-1) +1;
+        else
+            cnt = run(ladder, x + 1, y) +1;
+        ladder[x][y] = 1;
         return cnt;
     }
 }
