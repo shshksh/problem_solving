@@ -22,7 +22,7 @@ public class AreaFile {
     }
 
     private void addToMap() throws FileNotFoundException {
-        String path = "algorithm/src/algorithm_2019/resource/" + "alabama.txt";
+        String path = "algorithm/src/algorithm_2019/res/" + "alabama.txt";
         File file = new File(path);
 
         Scanner fileScanner = new Scanner(file);
@@ -34,7 +34,7 @@ public class AreaFile {
     }
 
     private void connectEdges() throws CloneNotSupportedException, FileNotFoundException {
-        String path = "algorithm/src/algorithm_2019/resource/" + "roadList2.txt";
+        String path = "algorithm/src/algorithm_2019/res/" + "roadList2.txt";
         File file = new File(path);
 
         Scanner fileScanner = new Scanner(file);
