@@ -131,76 +131,59 @@ public class AreaFile {
     }
 
     public void pathOf(String src, String dst) {
-        if(!(AreaMap.containsKey(src) && AreaMap.containsKey(dst))) {
+        if (!(AreaMap.containsKey(src) && AreaMap.containsKey(dst))) {
             System.out.println("Wrong Area");
             return;
         }
-        ArrayList<Area> result = shortestPathOf(AreaMap.get(src));
-        printPath(result, AreaMap.get(dst));
+        HashMap<String, Area> chosen = shortestPathOf(AreaMap.get(src));
+        printPath(chosen, dst);
     }
 
-    private ArrayList<Area> shortestPathOf(Area src) {
-        HashMap<String, Boolean> set = new HashMap<>();
-        ArrayList<Area> adjList = new ArrayList<>();
-        initialize(set ,adjList, src);
+    private HashMap<String, Area> shortestPathOf(Area src) {
+        HashMap<String, Area> chosen = new HashMap<>();
+        PriorityQueue<Area> q = new PriorityQueue<>(Comparator.comparingDouble(o -> o.weigh));
+        initialize(chosen, q, src);
 
-        while (set.size() != AreaMap.size()) {
-            Area minimalWeigh = null;
-            set.put(minimalWeigh.name, true);
-            adjList.remove(minimalWeigh);
-            updateWeigh(set, adjList, minimalWeigh);
+        for (int i = 0; i < AreaMap.size() - 1; i++) {
+            Area added = nextAreaOf(chosen, q);
+            chosen.put(added.name, added);
+            updateWeigh(chosen, q, added);
         }
-        return adjList;
+        return chosen;
     }
 
-    private void initialize(HashMap<String, Boolean> set, ArrayList<Area> adjList, Area src) {
-        set.put(src.name, true);
-        Area curr = src.next;
+    private void initialize(HashMap<String, Area> chosen, PriorityQueue<Area> q, Area src) {
+        chosen.put(src.name, src);
+        Area curr = AreaMap.get(src.name).next;
         while (curr != null) {
-            adjList.add(curr);
-            curr.prev = src;
-            curr = curr.next;
-        }
-    }
-
-    private void updateWeigh(HashMap<String, Boolean> set, ArrayList<Area> list, Area added) {
-        Area target = AreaMap.get(added.name);
-        Area curr = target.next;
-        while (curr != null) {
-            if (!set.containsKey(curr.name)) {
-                int index = getIndex(list, curr.name);
-                if (index >= 0) {
-                    double existingWeigh = list.get(index).weigh;
-                    if (existingWeigh > added.weigh + curr.weigh) {
-                        list.get(index).weigh = added.weigh+curr.weigh;
-                        list.get(index).prev = target;
-                    }
-                } else {
-                    list.add(curr);
-                    curr.weigh += added.weigh;
-                    curr.prev = target;
-                }
-            }
-            curr = curr.next;
-        }
-    }
-
-    private int getIndex(ArrayList<Area> list, String curr) {
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(1).name.equals(curr))
-                return i;
-        }
-        return -1;
-    }
-
-    private void printPath(ArrayList<Area> list, Area dst) {
-        Area curr = null;
-        for (Area area : list) {
-            if(area.name.equals(dst.name)) {
-                curr = area;
-                break;
+            if (!chosen.containsKey(curr.name)) {
+                curr.prev = src;
+                q.offer(curr);
+                curr = curr.next;
             }
         }
+    }
+
+    private Area nextAreaOf(HashMap<String, Area> chosen, PriorityQueue<Area> q) {
+        while (!q.isEmpty() && chosen.containsKey(q.peek().name))
+            q.poll();
+        return q.poll();
+    }
+
+    private void updateWeigh(HashMap<String, Area> chosen, PriorityQueue<Area> q, Area added) {
+        Area adjacentArea = AreaMap.get(added.name).next;
+        while (adjacentArea != null) {
+            if (!chosen.containsKey(adjacentArea.name)) {
+                adjacentArea.weigh += added.weigh;
+                adjacentArea.prev = added;
+                q.offer(adjacentArea);
+            }
+            adjacentArea = adjacentArea.next;
+        }
+    }
+
+    private void printPath(HashMap<String, Area> chosen, String dst) {
+        Area curr = chosen.get(dst);
 
         Stack<String> stack = new Stack<>();
         while (curr != null) {
@@ -208,7 +191,7 @@ public class AreaFile {
             curr = curr.prev;
         }
 
-        System.out.println("path size: " + (stack.size()-1));
+        System.out.println("path size: " + (stack.size() - 1));
         while (!stack.isEmpty()) {
             System.out.println(stack.pop());
         }
