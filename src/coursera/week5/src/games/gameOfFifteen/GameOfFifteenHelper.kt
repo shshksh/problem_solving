@@ -11,5 +11,8 @@ package games.gameOfFifteen
  * Thus the initial permutation should be correct.
  */
 fun isEven(permutation: List<Int>): Boolean {
-    TODO()
+    return permutation.sumBy { i ->
+        val index = permutation.indexOf(i)
+        permutation.subList(0, index).count { j -> j > i }
+    } % 2 == 0
 }
