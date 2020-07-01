@@ -1,4 +1,4 @@
-package signature
+package hyperskill.ascii_text_signature
 
 import java.io.File
 import java.lang.StringBuilder
@@ -52,7 +52,7 @@ fun printBody(name: String, width: Int, height: Int, map: MutableMap<Char, Lette
     }
 }
 
-fun printEdge(width: Int) {
+private fun printEdge(width: Int) {
     val sb = StringBuilder()
     repeat(width) { sb.append("8") }
     println(sb.toString())

@@ -1,4 +1,4 @@
-package signature
+package hyperskill.ascii_text_signature
 
 import java.util.*
 

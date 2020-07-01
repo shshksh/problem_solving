@@ -1,4 +1,4 @@
-package signature
+package hyperskill.ascii_text_signature
 
 import java.util.*
 import kotlin.math.max
@@ -45,7 +45,7 @@ fun printBody(list: List<String> = listOf(), name: String = "", width: Int = 0) 
     val replace = if (list.isNotEmpty()) {
         name.map { c ->
             when (c) {
-                ' ' -> "    "
+                ' ' -> space
                 else -> list[c.toInt() - 'a'.toInt()]
             }
         }.joinToString(" ")
@@ -64,7 +64,7 @@ fun printBody(list: List<String> = listOf(), name: String = "", width: Int = 0) 
     println(sj.toString())
 }
 
-fun printEdge(width: Int) {
+private fun printEdge(width: Int) {
     val sb = StringBuilder()
     for (i in 0 until width)
         sb.append("*")
@@ -83,37 +83,3 @@ fun splitSymbols(line: String): List<String> {
 
     return list
 }
-
-val s = """
-*********************
-*  _  _      _   _  *
-*   \/        \_/   *
-*  _/\_        |    *
-*      Status       *
-*********************
-""".trimIndent()
-
-val t = """
-*********************
-*  _  _      _   _  *
-*   \/        \_/   *
-*  _/\_        |    *
-*      Status       *
-*********************
-""".trimIndent()
-val z = """
-*********************
-*  _  _      _   _  *
-*   \/        \_/   *
-*  _/\_        |    *
-*      Statusa      *
-*********************
-""".trimIndent()
-val k = """
-*********************
-*  _  _      _   _  *
-*   \/        \_/   *
-*  _/\_        |    *
-*      Status       *
-*********************
-"""
