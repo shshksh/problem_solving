@@ -11,7 +11,3 @@ class Solution:
             d[(n - i, n)] = d.setdefault((n - i + 1, n), 1) * nums[n - i]
 
         return [d[0, i-1] * d[i+1, n] for i in range(n + 1)]
-
-
-
-Solution().productExceptSelf([1, 2, 3, 4])
