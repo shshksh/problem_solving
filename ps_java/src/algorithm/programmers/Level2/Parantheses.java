@@ -2,7 +2,7 @@ package algorithm.programmers.Level2;
 
  public class Parantheses {
     public static String solution(String p) {
-        if(p.isBlank() || isCorrectString(p))
+        if(p.isEmpty() || isCorrectString(p))
             return p;
         int separatedIndex = separate(p);
         String u = p.substring(0, separatedIndex);

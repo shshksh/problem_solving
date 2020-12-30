@@ -11,9 +11,9 @@ public class BOJ11729 {
 
     public static void main(String[] args) throws IOException {
         int n = new Scanner(System.in).nextInt();
-        Stack[] hanoi = new Stack[3];
+        Stack<Integer>[] hanoi = new Stack[3];
         for (int i = 0; i < hanoi.length; i++) {
-            hanoi[i] = new Stack<Integer>();
+            hanoi[i] = new Stack<>();
         }
         for (int i = 0; i < n; i++) {
             hanoi[0].push(n - i);
@@ -24,7 +24,7 @@ public class BOJ11729 {
         bw.close();
     }
 
-    public static void HanoiTower(int n, Stack[] hanoi, int from, int to) throws IOException {
+    public static void HanoiTower(int n, Stack<Integer>[] hanoi, int from, int to) throws IOException {
         if (n == 0)
             return;
         int[] chk = new int[3];
@@ -40,7 +40,7 @@ public class BOJ11729 {
         HanoiTower(n-1, hanoi, tmp, to);
     }
 
-    private static void move(Stack[] hanoi, int from, int to) throws IOException {
+    private static void move(Stack<Integer>[] hanoi, int from, int to) throws IOException {
         hanoi[to].push(hanoi[from].pop());
         String str = (from+1) + " " + (to+1) + "\n";
         bw.write(str);
