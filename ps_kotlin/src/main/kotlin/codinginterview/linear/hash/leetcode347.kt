@@ -1,4 +1,4 @@
-package codinginterview.chap7.linear
+package codinginterview.linear.hash
 
 fun topKFrequent(nums: IntArray, k: Int): IntArray {
     return nums.groupBy { it }
