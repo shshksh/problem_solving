@@ -1,4 +1,4 @@
-package programmers.skill_checks.highscorekit.stack_queue
+package programmers.highscorekit.stack_queue
 
 import kotlin.math.ceil
 

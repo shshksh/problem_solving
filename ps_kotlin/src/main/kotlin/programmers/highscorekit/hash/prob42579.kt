@@ -1,4 +1,4 @@
-package programmers.skill_checks.highscorekit.hash
+package programmers.highscorekit.hash
 
 fun solution(genres: Array<String>, plays: IntArray): IntArray {
     return genres.mapIndexed { index, s -> s to index }

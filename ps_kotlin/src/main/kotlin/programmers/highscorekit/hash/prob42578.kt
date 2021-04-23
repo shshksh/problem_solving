@@ -1,4 +1,4 @@
-package programmers.skill_checks.highscorekit.hash
+package programmers.highscorekit.hash
 
 fun solution(clothes: Array<Array<String>>): Int {
     return clothes.groupBy({ it[1] }, { it[0] })
