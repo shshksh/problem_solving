@@ -1,7 +1,18 @@
 package boj
 
+/*
+Source: 백준 1753 최단경로(https://www.acmicpc.net/problem/1753)
+Solved: O
+Approach: 다익스트라.
+Review:
+- 다수 오답과 메모리 초과가 발생하여 수정했지만 이전 코드와 다른 점을 찾지 못하겠음. 우선순위 큐에 Vertex
+를 넣는것과 edge로 사용하는 Pair를 넣는점이 다르고 알고리즘은 동일한데 맞다고 나오니 찝찝하다.
+ */
+
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import java.util.*
 
 fun main() {
@@ -19,58 +30,48 @@ fun main() {
     boj1753(vertexCount, startVertex, edges)
 }
 
-data class Vertex(val number: Int, val edges: MutableList<Vertex>, var weight: Int)
+data class Vertex(
+    val number: Int,
+    val edges: MutableList<Pair<Int, Int>>?,
+    var weight: Int,
+)
 
 fun boj1753(vertexCount: Int, startVertex: Int, edges: Array<IntArray>) {
 
-    val graph = mutableMapOf<Int, Vertex>()
-    repeat(vertexCount) {
-        graph[it + 1] = Vertex(it + 1, mutableListOf(), Int.MAX_VALUE)
-    }
+    val graph =
+        Array(vertexCount + 1) { Vertex(it, mutableListOf(), Int.MAX_VALUE) }
     edges.forEach {
-        graph.getOrPut(it[0]) { Vertex(it[0], mutableListOf(), Int.MAX_VALUE) }
-            .edges
-            .add(Vertex(it[1], mutableListOf(), it[2]))
+        graph[it[0]].edges?.add(it[1] to it[2])
     }
 
-    val q = PriorityQueue<Vertex> { o1, o2 -> o1.weight - o2.weight }
-    graph[startVertex]?.weight = 0
-    q.offer(graph[startVertex])
+    val q = PriorityQueue<Pair<Int, Int>> { o1, o2 -> o1.second - o2.second }
+    q.offer(startVertex to 0)
     val visit = BooleanArray(vertexCount + 1)
 
     while (q.isNotEmpty()) {
-        val v = getNextVertex(q, visit)
-        v?.let {
-            visit[v.number] = true
+        val edge = q.poll() ?: continue
+        if (visit[edge.first])
+            continue
+        visit[edge.first] = true
+        graph[edge.first].weight = edge.second
 
-            v.edges.forEach { e ->
-                if (!visit[e.number]) {
-                    val adj = graph[e.number]!!
-                    adj.weight = minOf(adj.weight, v.weight + e.weight)
-                    q.offer(adj)
-                }
+        graph[edge.first].edges?.forEach { e ->
+            if (!visit[e.first]) {
+                val adj = graph[e.first]
+                val w = minOf(adj.weight, graph[edge.first].weight + e.second)
+                q.offer(e.first to w)
             }
         }
     }
 
-    val sb = StringBuilder()
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
     repeat(vertexCount) {
-        graph[it + 1]?.weight?.let { w ->
-            if (w == Int.MAX_VALUE)
-                sb.append("INF").appendLine()
-            else
-                sb.append(w).appendLine()
-        }
-    }
-    println(sb.toString())
-}
+        val w = graph[it + 1].weight
 
-fun getNextVertex(q: PriorityQueue<Vertex>, visit: BooleanArray): Vertex? {
-    while (q.isNotEmpty()) {
-        q.poll()?.let {
-            if (!visit[it.number])
-                return it
-        }
+        if (w == Int.MAX_VALUE)
+            bw.write("INF\n")
+        else
+            bw.write("$w\n")
     }
-    return null
+    bw.flush()
 }

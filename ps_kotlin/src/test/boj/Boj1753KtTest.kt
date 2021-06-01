@@ -6,7 +6,7 @@ internal class Boj1753KtTest {
     @Test
     fun test1() {
         val vertexCount = 5
-        val startVertex = 2
+        val startVertex = 1
         val edges = arrayOf(
             intArrayOf(5, 1, 1),
             intArrayOf(1, 2, 2),
