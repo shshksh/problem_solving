@@ -86,7 +86,7 @@ fun addHorseStep(
     }
 }
 
-fun isValid(x: Int, y: Int, field: Array<IntArray>): Boolean {
+private fun isValid(x: Int, y: Int, field: Array<IntArray>): Boolean {
     if (x < 0 || x >= field.size || y < 0 || y >= field[0].size || field[x][y] == 1)
         return false
     return true
