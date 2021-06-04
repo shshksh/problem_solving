@@ -1,5 +1,15 @@
 package boj
 
+/*
+Source: 백준 14500 테트로미노(https://www.acmicpc.net/problem/14500)
+Solved: O
+Approach: 완전 탐색
+Review:
+- 각각의 테트로미노를 회전하거나 대칭하여 만들 수 있는 모든 경우의 수를 미리 정의. 테트로미노는 시작지점
+부터 상대적 좌표 위치를 사용하여 정의. 맵의 모든 셀을 순회하며 각각의 셀을 시작지점으로 테트로미노를 만들
+었을 때 최대값을 비교하여 모든 경우의 수를 완전 탐색.
+ */
+
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
