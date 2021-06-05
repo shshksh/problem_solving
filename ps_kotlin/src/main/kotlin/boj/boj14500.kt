@@ -71,7 +71,7 @@ private fun calcSum(arr: Array<IntArray>, x: Int, y: Int): Int {
     return sum
 }
 
-fun isValid(arr: Array<IntArray>, x: Int, y: Int): Boolean {
+private fun isValid(arr: Array<IntArray>, x: Int, y: Int): Boolean {
     val (height, width) = arr.size to arr[0].size
     if (x < 0 || x >= height || y < 0 || y >= width)
         return false

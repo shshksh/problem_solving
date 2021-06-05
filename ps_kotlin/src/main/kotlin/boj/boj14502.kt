@@ -15,9 +15,9 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
 
-val br = BufferedReader(InputStreamReader(System.`in`))
-val dx = intArrayOf(-1, 0, 1, 0)
-val dy = intArrayOf(0, 1, 0, -1)
+private val br = BufferedReader(InputStreamReader(System.`in`))
+private val dx = intArrayOf(-1, 0, 1, 0)
+private val dy = intArrayOf(0, 1, 0, -1)
 
 fun main() {
     val (height, width) = br.readLine().split(" ").map { it.toInt() }
