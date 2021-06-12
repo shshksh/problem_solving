@@ -1,45 +1,30 @@
 package boj
 
-fun main() {
-    class Node(var value: Char?, var left: Node? = null, var right: Node? = null)
+import java.util.*
 
+fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
-    var cursor: Node? = Node(null)
+    val list = LinkedList<Char>()
     for (c in br.readLine()) {
-        cursor?.right = Node(c, cursor)
-        cursor = cursor?.right
+        list.add(c)
     }
+    val iterator = list.listIterator(list.size)
     val n = br.readLine().toInt()
 
     repeat(n) {
         val command = br.readLine().split(" ")
         when (command[0]) {
-            "L" -> if (cursor?.left != null) cursor = cursor?.left
-            "D" -> if (cursor?.right != null) cursor = cursor?.right
-            "B" -> {
-                if (cursor?.value != null) {
-                    cursor?.left?.right = cursor?.right
-                    cursor?.right?.left = cursor?.left
-                    cursor = cursor?.left
-                }
+            "L" -> if (iterator.hasPrevious()) iterator.previous()
+            "D" -> if (iterator.hasNext()) iterator.next()
+            "B" -> if (iterator.hasPrevious()) {
+                iterator.previous()
+                iterator.remove()
             }
-            "P" -> {
-                cursor?.right = Node(command[1][0], cursor, cursor?.right)
-                if (cursor?.right?.right != null)
-                    cursor?.right?.right?.left = cursor?.right
-                cursor = cursor?.right
-            }
+            "P" -> iterator.add(command[1][0])
         }
     }
-    while (cursor?.value != null)
-        cursor = cursor?.left
-    cursor = cursor?.right
-
-    while (cursor != null) {
-        bw.write("${cursor?.value}")
-        cursor = cursor?.right
-    }
+    bw.write(list.toCharArray())
     bw.flush()
 }
