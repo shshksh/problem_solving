@@ -1,6 +1,6 @@
 package programmers.highscorekit.binary
 
-//fun solution(distance: Int, rocks: IntArray, n: Int): Int {
+//fun boj.solution(distance: Int, rocks: IntArray, n: Int): Int {
 //    rocks.sort()
 //
 //    val diff = IntArray(rocks.size + 1)
@@ -31,9 +31,9 @@ package programmers.highscorekit.binary
 //}
 //
 //fun main() {
-//    println(solution(25, intArrayOf(2, 14, 11, 21, 17), 2))
-//    println(solution(30, intArrayOf(2, 14, 11, 25, 17), 2))
-//    println(solution(1000000000, intArrayOf(2, 14, 11, 25, 17), 1))
-//    println(solution(16, intArrayOf(4, 8, 11), 2))
+//    println(boj.solution(25, intArrayOf(2, 14, 11, 21, 17), 2))
+//    println(boj.solution(30, intArrayOf(2, 14, 11, 25, 17), 2))
+//    println(boj.solution(1000000000, intArrayOf(2, 14, 11, 25, 17), 1))
+//    println(boj.solution(16, intArrayOf(4, 8, 11), 2))
 //}
 // 실패
