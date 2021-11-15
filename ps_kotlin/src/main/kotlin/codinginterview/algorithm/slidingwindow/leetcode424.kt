@@ -6,7 +6,7 @@ fun characterReplacement(s: String, k: Int): Int {
 
     for (tail in s.indices) {
         counter[s[tail]] = counter.getOrDefault(s[tail], 0) + 1
-        val mCount = counter.values.max() ?: 0
+        val mCount = counter.values.maxOrNull() ?: 0
 
         if (tail - head - mCount >= k) {
              counter[s[head]] = counter.getOrDefault(s[head], 0) - 1

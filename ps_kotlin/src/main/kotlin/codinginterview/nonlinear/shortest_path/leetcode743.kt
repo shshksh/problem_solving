@@ -26,7 +26,7 @@ fun networkDelayTime(times: Array<IntArray>, N: Int, K: Int): Int {
     }
 
     if (check.drop(1).all { it }) {
-        return weights.drop(1).max() ?: -1
+        return weights.drop(1).maxOrNull() ?: -1
     }
     return -1
 }
