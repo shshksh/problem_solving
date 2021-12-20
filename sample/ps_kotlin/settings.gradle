@@ -1,2 +1,5 @@
 rootProject.name = 'ps_kotlin'
+include 'boj'
+include 'programmers'
+include 'codinginterview'
 
