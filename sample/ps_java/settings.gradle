@@ -1,0 +1,9 @@
+rootProject.name = 'ps_java'
+include 'jvamo'
+include 'algorithm_2018'
+include 'algorithm_2019'
+include 'algorithm_2020'
+include 'boj'
+include 'programmers'
+include 'swexpert'
+
